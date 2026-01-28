@@ -222,42 +222,6 @@ function ZenController:KnitStart()
 	local CurrencyLabel = Zen.CurrencyLabel
 	local Event = Zen.Event
 
-	-- HUD hover effect helper function
-	-- local function useHUDHoverEffect(button)
-	--     return button:AddHoverEffect("HL_HUD"):AddClickEffect("Bounce")
-	-- end
-
-	-- IndexController:Mount(main)
-	-- SettingsController:mount(main)
-
-	-- Mount Shop Controller (game-specific - uncomment if needed)
-	-- ShopController:Mount(main)
-
-	-- Mount Robux Shop Controller
-	RobuxShopController:Mount(main)
-
-	-- Mount Secret Shop Controller (game-specific - uncomment if needed)
-	-- SecretShopController:Mount(main)
-
-	-- Mount Gear Shop Controller (game-specific - uncomment if needed)
-	-- GearShopController:Mount(main)
-
-	-- Mount Rebirth Controller
-	local RebirthController = Knit.GetController("RebirthController")
-	RebirthController:Mount(main)
-
-	-- Mount AdminAbuse Controller (wrapped in pcall as it may not exist in all places)
-	local AdminAbuseController = Knit.GetController("AdminAbuseController")
-	local success, err = pcall(function()
-		AdminAbuseController:Mount(main)
-	end)
-	if not success then
-		warn("[ZenController] AdminAbuseController:Mount failed:", err)
-	end
-
-	-- Mount GroupRewards Controller
-	local GroupRewardsController = Knit.GetController("GroupRewardsController")
-	GroupRewardsController:Mount(main)
 
 	self.Main = main
 

@@ -1,3 +1,38 @@
+--[[
+    example Zen menu creation setup code:
+
+function ShopController:Mount(main)
+    main:Menu("Shop", "/Shop", {
+		[Event("Open")] = function(menu, maid)
+			ZenController:InitMenu(menu, maid)
+			ZenController:ReduceMobileStroke(menu, maid)
+
+            -- any other init code
+
+			-- Observe cash changes to update button states
+			maid:GiveTask(DataController:Observe("/Default/Cash", function()
+				-- cash changed, do something
+                -- self:UpdateShopUI(menu, maid)
+			end))
+		end,
+
+        -- only needed if Close button is in a special location, not directly .Close under the shop frame:
+		[Button(".TopBar.Close")] = function()
+            if main then
+                main:CloseMenu("Shop")
+            end
+		end,
+	}, { global = true })
+end
+
+add to ZenController in KnitStart:
+ShopController:Mount(main)
+    
+]]
+
+
+
+
 --[[ compiled with [luau with classes] compiler v4.6 ]] __author__ = "@NWhut <https://whut.dev/>"	local getclassconstructor do _typeof = typeof; typeof = function(object) local object_type = _typeof(object); if object_type == "table" then local meta = getmetatable(object); if meta then if meta.__LUAUWITHCLASSES_INTERNAL_DO_NOT_MODIFY__CONSTRUCTOR_REFERENCE then object_type = "classinstance" end; if meta.__LUAUWITHCLASSES_INTERNAL_DO_NOT_MODIFY__ISCONSTRUCTOR then object_type = "classconstructor" end end end; return object_type end; getclassconstructor = function(object) if typeof(object) == "classinstance" then return getmetatable(object).__LUAUWITHCLASSES_INTERNAL_DO_NOT_MODIFY__CONSTRUCTOR_REFERENCE end end end; local super = function(self) return getmetatable(self).__LUAUWITHCLASSES_INTERNAL_DO_NOT_MODIFY__INHERITCLASSCONSTRUCTORS[1] end;wlib = (function() assert = function(condition, message, scope) if not condition then error(message, 2 + (scope or 0)) end end local wlib = {} function wlib.partial(fn, ...) local dargs = table.pack(...) return function(...) local args = {}; for _, darg in ipairs(dargs) do table.insert(args, darg) end; for _, darg in ipairs(table.pack(...)) do table.insert(args, darg) end; return fn(table.unpack(args)) end end function wlib.map(fn, iter) local values = nil if typeof(iter) == "table" then values = table.create(#iter) else values = {} end for idx, value in iter do values[idx] = fn(value) end return values end function wlib.filter(fn, iter) 		local values = {} for idx, value in iter do local condition = fn(value) if condition then 				values[idx] = value end end return values 	end function wlib.bool(x) 		return not not x end return wlib end)() local std = shared.std
 local Knit = std.Knit
 
